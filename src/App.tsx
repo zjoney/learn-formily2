@@ -1,38 +1,27 @@
-import { observable } from './@formily/reactive'
-import { Observer } from './@formily/reactive-react'
-const username = observable({ value: '狂飙' })
-const age = observable({ value: 100 })
-function App() {
+import React, { useMemo, useState } from "react";
+import { createForm, onFormInit, onFormReact } from "@formily/core";
 
+export default function () {
+  const [state, setState] = useState('未设置')
+  const form = useMemo(() => {
+    return createForm({
+      effects() {
+        onFormInit(() => {
+          setState('初始化')
+        })
+        onFormReact((form) => {
+          if (form.values.example === 'hello') {
+            setState('hello')
+          }
+        })
+
+      }
+    })
+  }, [])
   return (
-    <>
-      <Observer>
-        {
-          () => (<input value={username.value} onChange={event => username.value = event.target.value} />)
-        }
-      </Observer>
-      <Observer>
-        {
-          () => {
-            console.log('username render')
-            return <div>{username.value}</div>
-          }
-        }
-      </Observer>
-      <Observer>
-        {
-          () => (<input value={age.value} onChange={event => age.value = +event.target.value} />)
-        }
-      </Observer>
-      <Observer>
-        {
-          () => {
-            console.log('age render')
-            return <div>{age.value}</div>
-          }
-        }
-      </Observer>
-    </>
+    <div>
+      <p>{state}</p>
+      <button onClick={() => form.setValuesIn('example', 'hello')}>hello</button>
+    </div>
   )
 }
-export default App;
