@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mvvm</title>
+</head>
+
+<body>
+  <input id='bookTitle' value='张三丰' />
+  <script>
+    class Book {
+      constructor(title) {
+        this.title = title
+      }
+    }
+    let book = new Book('张三丰')
+    var viewModel = { display: 'block' }
+    Object.defineProperty(viewModel, 'title', {
+      get() {
+        return book.title
+      },
+      set(newTitle) {
+        bookTitle.value = book.title = newTitle
+      }
+    })
+
+    Object.defineProperty(viewModel, 'display', {
+      get() {
+        return bookTitle.style.display
+      },
+      set(newDisplay) {
+        bookTitle.style.display = newDisplay
+      }
+    })
+    //View(视图层)负责维护 UI 结构与样式
+    //同时负责与 ViewModel(视图模型)做数据绑定
+    //这里的数据绑定关系是双向的，也就是，ViewModel(视图模型)的数据发生变化，会触发 View(视图层)的更新
+    viewModel.title = '新张三丰'
+    //同时视图层的数据变化又会触发 ViewModel(视图模型)的变化
+    bookTitle.onchange = (event) => {
+      viewModel.title = event.target.value
+    }
+  </script>
+</body>
+
+</html>
