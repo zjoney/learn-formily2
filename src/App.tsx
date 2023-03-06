@@ -2,6 +2,8 @@ import { createForm, onFieldMount, onFieldValueChange, onFormInit, onFormReact }
 import { Field, createSchemaField } from "@formily/react";
 import 'antd/dist/antd.css'
 import { Form, FormItem, Input, NumberPicker } from '@formily/antd'
+import NewDrawPicture from './canvasNew'
+import { useEffect } from "react";
 
 // 联动协议：主动联动、被动联动、effects联动
 //  effects联动
@@ -95,12 +97,34 @@ const schema = {
   }
 }
 function App() {
+  // 初始化
+  useEffect(() => {
+    const drawPicture = new NewDrawPicture('livePlanCanvas', '2023-03', { time: '2022-03-03' })
+    drawPicture.init();
+  }, [])
+  // 画图
+  const handleCanvas = (): void => {
+    const yearMonthDate = '2023-03'
+    const canvas: any = document.getElementById('livePlanCanvas');
+    if (canvas) {
+      const SAVE_LINK: any = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+      SAVE_LINK.href = canvas.toDataURL('image/png');
+      SAVE_LINK.download = `YW${new Date(yearMonthDate).getMonth() + 1}月排班`;
+      const event = document.createEvent('MouseEvents');
+      event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      SAVE_LINK.dispatchEvent(event);
+    }
+  };
   return (
-    <Form form={form} labelCol={6} wrapperCol={5}>
-      <SchemaField
-        schema={schema}
-      />
-    </Form>
+    <div>
+    <button onClick={handleCanvas}>导出canvas</button>
+      <Form form={form} labelCol={6} wrapperCol={5}>
+        <SchemaField
+          schema={schema}
+        />
+      </Form>
+      <canvas id="livePlanCanvas" width="750" />
+    </div>
   )
 }
 export default App;
