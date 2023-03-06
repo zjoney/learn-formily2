@@ -93,13 +93,13 @@ export default class NewDrawPicture {
       c999999: '#999999', // 非本月日历number颜色
       c333333: '#333333', // 普通
       cFfffff: '#ffffff', // 标题颜色
-      c485FE9: '#485FE9', // 明星高亮
+      c485FE9: '#485FE9', // 药理高亮
       c465EEF: '#465EEF', // 周6，周日颜色
       cF6F8FC: '#F6F8FC', // 日历每一行头部颜色
       cEFF0FB: '#EFF0FB', // 列表背景颜色
       cD9DCFA: '#D9DCFA', // 列表中间分割线颜色
-      cFF4906: '#FF4906', // 快手标识
-      c170B1A: '#170B1A', // 抖音标识
+      cFF4906: '#FF4906', // 知识库标识
+      c170B1A: '#170B1A', // 医务标识
     };
     // 列表 paddingBottom
     this.listPaddingBottom = 30;
@@ -509,7 +509,7 @@ export default class NewDrawPicture {
 
               ctx.fillText(title, textX, textY);
 
-              // 1 是快手，2是抖音
+              // 1 知识库，2医务
               ctx.fillStyle = platform === 1 ? this.colorMap.cFF4906 : this.colorMap.c170B1A;
               ctx.arc(textX - 8, textY, 4, 0, 2 * Math.PI);
               ctx.fill();
@@ -558,7 +558,7 @@ export default class NewDrawPicture {
       const valX = 282;
       ctx.fillStyle = leftArray[x].zhuboType === 2 ? this.colorMap.c485FE9 : this.colorMap.c333333;
       ctx.fillText(this.calculListItemAnchorNameMaxWidth(name), textX, textY);
-      // 1 是快手，2是抖音
+      // 1 知识库，2医务
       ctx.fillStyle = platform === 1 ? this.colorMap.cFF4906 : this.colorMap.c170B1A;
       ctx.arc(textX - 8, textY, 4, 0, 2 * Math.PI);
       ctx.fill();
@@ -578,7 +578,7 @@ export default class NewDrawPicture {
       const valX = 627;
       ctx.fillStyle = rightArray[x].zhuboType === 2 ? this.colorMap.c485FE9 : this.colorMap.c333333;
       ctx.fillText(this.calculListItemAnchorNameMaxWidth(name), textX, textY);
-      // 1 是快手，2是抖音
+      // 1 知识库，2医务
       ctx.fillStyle = platform === 1 ? this.colorMap.cFF4906 : this.colorMap.c170B1A;
       ctx.arc(textX - 8, textY, 4, 0, 2 * Math.PI);
       ctx.fill();
